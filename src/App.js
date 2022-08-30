@@ -31,6 +31,7 @@ const ListItem = styled.div`
     align-items: center;
     padding: 4px 0px;
     justify-content: space-between;
+    transition: 2s ease;
   `;
 
 const Image = styled.img`
@@ -61,8 +62,12 @@ function App() {
         const newItems = [...items];
         const randomIndex = getRandomInt(items.length);
         const newItem = { ...newItems[randomIndex] };
+        let max = 10000;
+        if (randomIndex > 1) {
+          max = newItems[randomIndex - 2].score - newItem.score-1;
+        }
         newItems.splice(randomIndex, 1);
-        newItem.score = newItem.score + getRandomInt(10000);
+        newItem.score = newItem.score + getRandomInt(max);
         newItems.push(newItem);
         setItems(newItems.sort((a, b) => b.score - a.score));
       }, ONE_SECOND);
