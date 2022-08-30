@@ -19,18 +19,19 @@ const CenteredDiv = styled.div`
   align-items: center;
 `;
 
-const List = styled.ul`
-  list-style: none;
-  padding-inline-start: 0;
+const List = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
-const ListItem = styled.li`
-  width: 300px;
-  display: flex;
-  align-items: center;
-  padding: 4px 0px;
-  justify-content: space-between;
-`;
+const ListItem = styled.div`
+    width: 300px;
+    display: flex;
+    order: ${(props) => props.order}
+    align-items: center;
+    padding: 4px 0px;
+    justify-content: space-between;
+  `;
 
 const Image = styled.img`
   margin-left: 8px;
@@ -41,7 +42,7 @@ const Image = styled.img`
   border-radius: 40px;
 `;
 
-const ONE_SECOND = 100;
+const ONE_SECOND = 1000;
 
 function App() {
   const [items, setItems] = useState([]);
@@ -49,11 +50,9 @@ function App() {
   useEffect(() => {
     fetch('https://webcdn.17app.co/campaign/pretest/data.json')
       .then((res) => res.json())
-      .then(
-        (result) => {
-          setItems(result);
-        },
-      );
+      .then((result) => {
+        setItems(result.sort((a, b) => b.score - a.score));
+      });
   }, []);
 
   useEffect(() => {
@@ -61,18 +60,21 @@ function App() {
       setTimeout(() => {
         const newItems = [...items];
         const randomIndex = getRandomInt(items.length);
-        newItems[randomIndex].score =
-          newItems[randomIndex].score + getRandomInt(1000);
-        setItems(newItems);
+        const newItem = { ...newItems[randomIndex] };
+        newItems.splice(randomIndex, 1);
+        newItem.score = newItem.score + getRandomInt(10000);
+        newItems.push(newItem);
+        setItems(newItems.sort((a, b) => b.score - a.score));
       }, ONE_SECOND);
     }
   }, [items]);
 
   const renderItems = () => {
     return items.map((item, index) => (
-      <ListItem key={item.userID}>
+      <ListItem order={index} key={item.userID}>
         <CenteredDiv>
-          {index + 1} <Image src={item.picture} />
+          <div style={{ width: 20 }}>{index + 1} </div>
+          <Image src={item.picture} />
           {item.displayName}
         </CenteredDiv>
         <Score name={item.displayName} time={ONE_SECOND}>
@@ -84,7 +86,7 @@ function App() {
 
   return (
     <Container className='App'>
-      <List type='1'>{items.length > 0 && renderItems()}</List>
+      <List>{items.length > 0 && renderItems()}</List>
     </Container>
   );
 }
