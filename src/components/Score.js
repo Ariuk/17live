@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Div = styled.div`
   display: inline-box;
+  align-items: center;
 `;
 
 const DIVIDER = 24;

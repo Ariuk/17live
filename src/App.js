@@ -25,14 +25,15 @@ const List = styled.div`
 `;
 
 const ListItem = styled.div`
-    width: 300px;
-    display: flex;
-    order: ${(props) => props.order}
-    align-items: center;
-    padding: 4px 0px;
-    justify-content: space-between;
-    transition: 2s ease;
-  `;
+  width: 300px;
+  display: flex;
+  top: ${(props) => `${48 * props.order}px`};
+  align-items: center;
+  padding: 4px 0px;
+  justify-content: space-between;
+  transition: 0.3s ease;
+  position: absolute;
+`;
 
 const Image = styled.img`
   margin-left: 8px;
@@ -64,7 +65,7 @@ function App() {
         const newItem = { ...newItems[randomIndex] };
         let max = 10000;
         if (randomIndex > 1) {
-          max = newItems[randomIndex - 2].score - newItem.score-1;
+          max = newItems[randomIndex - 2].score - newItem.score - 1;
         }
         newItems.splice(randomIndex, 1);
         newItem.score = newItem.score + getRandomInt(max);
