@@ -21,12 +21,15 @@ const CenteredDiv = styled.div`
 
 const List = styled.div`
   display: flex;
+  width: 100%;
+  align-items: center;
   flex-direction: column;
 `;
 
 const ListItem = styled.div`
   width: 300px;
   display: flex;
+  height: 48px;
   top: ${(props) => `${48 * props.order}px`};
   align-items: center;
   padding: 4px 0px;
