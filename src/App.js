@@ -21,9 +21,9 @@ const CenteredDiv = styled.div`
 
 const List = styled.div`
   display: flex;
-  width: 100%;
   align-items: center;
-  flex-direction: column;
+  transition: top 0.3s ease;
+  position: relative;
 `;
 
 const ListItem = styled.div`
@@ -34,7 +34,7 @@ const ListItem = styled.div`
   align-items: center;
   padding: 4px 0px;
   justify-content: space-between;
-  transition: 0.3s ease;
+  transition: top 0.3s ease;
   position: absolute;
 `;
 
